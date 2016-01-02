@@ -8,12 +8,13 @@ Increased use and abuse of opioid has become an alarming public health challenge
 
 ### Visualizing Multidrug Deaths with plotrix
 
-The count of the various multidrug use could be displayed with a Venn diagram. . However as the number of intersections increases, the diagram become illisible. A good alternative of Venn diagram is the function **intersectDiagram** from the R package [plotrix](https://cran.r-project.org/web/packages/plotrix/index.html). It recreates the different compartments of the Venn diagram in separate rectangles. In addition the drugs are color coded, and the rectangle sizes are proportional to the count of death for the drug.
+The count of the various multidrug use could be displayed with a Venn diagram. . However as the number of intersections increases, the diagram become illisible. A good alternative of Venn diagram is the function **intersectDiagram** from the R package <a href="https://cran.r-project.org/web/packages/plotrix/index.html" target="_blank"> **plotrix** </a>.   
+It recreates the different compartments of the Venn diagram in separate rectangles. In addition the drugs are color coded, and the rectangle sizes are proportional to the count of death for the drug.
 We modified the function intersectDiagram in order to remove the boxed labels (from the original function *intersectDiagram*) and add shadowed labels.
 
 #### Install the package *vennplus*
 
-I create a small package called [**vennplus**](https://github.com/epinotes/vennplus) that contains the functions and data needed in this exercise.
+I create a small package called <a href="https://github.com/epinotes/vennplus" target="_blank"> **vennplus** </a> that contains the functions and data needed in this exercise.
  Use package *devtools* to install and run *vennplus* as follow:
 
 

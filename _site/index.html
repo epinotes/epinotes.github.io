@@ -40,7 +40,7 @@
           Epinotes
         </a>
       </h1>
-      <p class="lead">Epidemiology and R programming</p>
+      <p class="lead">Epidemiology, R Programming, etc.</p>
     </div>
 
     <nav class="sidebar-nav">
@@ -66,16 +66,24 @@
           
         
       
+        
+          
+        
+      
 
 
 
       <a class="sidebar-nav-item" href="https://github.com/epinotes" target="_blank">GitHub project</a>
 
 
-    </nav>
 
-    <p>&copy; 2016. All rights reserved.</p>
-Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="http://hyde.getpoole.com/" target="_blank">Hyde</a></p>
+
+  </nav>
+
+
+    <p>&copy; 2016. <span style="color:white"> M. Njaay </span>. Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="http://hyde.getpoole.com/" target="_blank">Hyde</a></p>
+
+
   </div>
 </div>
 
@@ -96,12 +104,13 @@ Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> and <a href
 
 <h3>Visualizing Multidrug Deaths with plotrix</h3>
 
-<p>The count of the various multidrug use could be displayed with a Venn diagram. . However as the number of intersections increases, the diagram become illisible. A good alternative of Venn diagram is the function <strong>intersectDiagram</strong> from the R package <a href="https://cran.r-project.org/web/packages/plotrix/index.html">plotrix</a>. It recreates the different compartments of the Venn diagram in separate rectangles. In addition the drugs are color coded, and the rectangle sizes are proportional to the count of death for the drug.
+<p>The count of the various multidrug use could be displayed with a Venn diagram. . However as the number of intersections increases, the diagram become illisible. A good alternative of Venn diagram is the function <strong>intersectDiagram</strong> from the R package <a href="https://cran.r-project.org/web/packages/plotrix/index.html" target="_blank"> <strong>plotrix</strong> </a>.<br>
+It recreates the different compartments of the Venn diagram in separate rectangles. In addition the drugs are color coded, and the rectangle sizes are proportional to the count of death for the drug.
 We modified the function intersectDiagram in order to remove the boxed labels (from the original function <em>intersectDiagram</em>) and add shadowed labels.</p>
 
 <h4>Install the package <em>vennplus</em></h4>
 
-<p>I create a small package called <a href="https://github.com/epinotes/vennplus"><strong>vennplus</strong></a> that contains the functions and data needed in this exercise.
+<p>I create a small package called <a href="https://github.com/epinotes/vennplus" target="_blank"> <strong>vennplus</strong> </a> that contains the functions and data needed in this exercise.
  Use package <em>devtools</em> to install and run <em>vennplus</em> as follow:</p>
 <div class="highlight"><pre><code class="language-r" data-lang="r">devtools<span class="o">::</span>install_github<span class="p">(</span><span class="s">&quot;epinotes/vennplus&quot;</span><span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>vennplus<span class="p">)</span>
@@ -145,60 +154,19 @@ col3 <span class="o">&lt;-</span> brewer.pal<span class="p">(</span><span class=
 
   </div>
   
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2015/11/04/BMI-For-Age/">
-        BMI For Age
-      </a>
-    </h1>
-
-    <span class="post-date">04 Nov 2015</span>
-
-    <p><strong>bmiage</strong> is a R package for calculating BMI for age and sex. It uses CDC child bmi charts to assign each bmi to the four categories: <em>underweight</em>, <em>healthy weight</em>, <em>overweight</em> and <em>obese</em>.     </p>
-
-<p><strong>To install the package:</strong>, run these two lines of R codes.   </p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">devtools<span class="o">::</span>install_github<span class="p">(</span><span class="s">&quot;epinotes/bmiage&quot;</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>bmiage<span class="p">)</span>
-</code></pre></div>
-<p><strong>Examples</strong>  </p>
-
-<p>Looking into the help files for the function <em>bmicat</em></p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="o">?</span>bmicat
-</code></pre></div>
-<p>When no dataset is provided try:</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">bmicat<span class="p">(</span>data <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>sex <span class="o">=</span> <span class="s">&quot;F&quot;</span><span class="p">,</span>age <span class="o">=</span> <span class="m">18</span><span class="p">,</span>wt.kg <span class="o">=</span> <span class="m">70</span> <span class="p">,</span>ht.m <span class="o">=</span> <span class="m">1.75</span><span class="p">,</span> age.unit<span class="o">=</span><span class="s">&quot;year&quot;</span><span class="p">,</span>bind <span class="o">=</span> <span class="bp">F</span><span class="p">)</span>  
-</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">##        bmi bmicat
-## 1 22.85714      1
-</code></pre></div>
-<p>Now let&#39;s create a dataframe df:</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"> df <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>sex <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;F&quot;</span><span class="p">,</span><span class="s">&quot;M&quot;</span><span class="p">,</span> <span class="s">&quot;F&quot;</span><span class="p">),</span> age <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">18</span><span class="p">,</span><span class="m">15</span><span class="p">,</span><span class="kc">NA</span><span class="p">),</span> weight <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">70</span><span class="p">,</span><span class="m">50</span><span class="p">,</span> <span class="m">55</span><span class="p">),</span> height <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">1.75</span><span class="p">,</span> <span class="m">1.60</span><span class="p">,</span> <span class="m">1.65</span><span class="p">))</span>
-</code></pre></div>
-<p>We can use the new dataframe, df, with the function <em>bmicat</em>:</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"> df <span class="o">&lt;-</span> bmicat<span class="p">(</span>data <span class="o">=</span> df<span class="p">,</span>sex <span class="o">=</span> sex<span class="p">,</span>age <span class="o">=</span> age<span class="p">,</span>wt.kg <span class="o">=</span> weight <span class="p">,</span>ht.m <span class="o">=</span> height<span class="p">,</span> age.unit<span class="o">=</span><span class="s">&quot;year&quot;</span><span class="p">,</span>bind <span class="o">=</span> <span class="bp">T</span><span class="p">)</span>
-
- df
-</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">##   sex age weight height      bmi bmicat
-## 1   F  18     70   1.75 22.85714      1
-## 2   M  15     50   1.60 19.53125      1
-## 3   F  NA     55   1.65 20.20202     NA
-</code></pre></div>
-<p>Now <em>df</em> has two added variables.  </p>
-
-
-
-
-  </div>
-  
 </div>
 
 <div class="pagination">
   
-    <span class="pagination-item older">Older</span>
+    <a class="pagination-item older" href="/page2">Older</a>
   
   
     <span class="pagination-item newer">Newer</span>
   
 </div>
+
+
+
 
     </div>
  <script id="dsq-count-scr" src="//epinotes.disqus.com/count.js" async></script>

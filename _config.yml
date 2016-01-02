@@ -9,15 +9,15 @@ relative_permalinks: true
 # Setup
 title:            Epinotes
 tagline:          'R'
-description:      'Epidemiology and R programming'
+description:      'Epidemiology, R Programming, etc.'
 url:              http://epinotes.github.io
 baseurl:          /
 
-author:
+author:  
   name:           'M. Njaay'
   url:            https://twitter.com/epinotes
 
-paginate:         5
+paginate:         1
 
 # Custom vars
 version:          1.0.0

@@ -4,7 +4,7 @@
  <title>Epinotes</title>
  <link href="http://epinotes.github.io/atom.xml" rel="self"/>
  <link href="http://epinotes.github.io/"/>
- <updated>2016-01-01T22:47:46-06:00</updated>
+ <updated>2016-01-02T09:35:10-06:00</updated>
  <id>http://epinotes.github.io</id>
  <author>
    <name>M. Njaay</name>
@@ -21,12 +21,13 @@
 
 &lt;h3&gt;Visualizing Multidrug Deaths with plotrix&lt;/h3&gt;
 
-&lt;p&gt;The count of the various multidrug use could be displayed with a Venn diagram. . However as the number of intersections increases, the diagram become illisible. A good alternative of Venn diagram is the function &lt;strong&gt;intersectDiagram&lt;/strong&gt; from the R package &lt;a href=&quot;https://cran.r-project.org/web/packages/plotrix/index.html&quot;&gt;plotrix&lt;/a&gt;. It recreates the different compartments of the Venn diagram in separate rectangles. In addition the drugs are color coded, and the rectangle sizes are proportional to the count of death for the drug.
+&lt;p&gt;The count of the various multidrug use could be displayed with a Venn diagram. . However as the number of intersections increases, the diagram become illisible. A good alternative of Venn diagram is the function &lt;strong&gt;intersectDiagram&lt;/strong&gt; from the R package &lt;a href=&quot;https://cran.r-project.org/web/packages/plotrix/index.html&quot; target=&quot;_blank&quot;&gt; &lt;strong&gt;plotrix&lt;/strong&gt; &lt;/a&gt;.&lt;br&gt;
+It recreates the different compartments of the Venn diagram in separate rectangles. In addition the drugs are color coded, and the rectangle sizes are proportional to the count of death for the drug.
 We modified the function intersectDiagram in order to remove the boxed labels (from the original function &lt;em&gt;intersectDiagram&lt;/em&gt;) and add shadowed labels.&lt;/p&gt;
 
 &lt;h4&gt;Install the package &lt;em&gt;vennplus&lt;/em&gt;&lt;/h4&gt;
 
-&lt;p&gt;I create a small package called &lt;a href=&quot;https://github.com/epinotes/vennplus&quot;&gt;&lt;strong&gt;vennplus&lt;/strong&gt;&lt;/a&gt; that contains the functions and data needed in this exercise.
+&lt;p&gt;I create a small package called &lt;a href=&quot;https://github.com/epinotes/vennplus&quot; target=&quot;_blank&quot;&gt; &lt;strong&gt;vennplus&lt;/strong&gt; &lt;/a&gt; that contains the functions and data needed in this exercise.
  Use package &lt;em&gt;devtools&lt;/em&gt; to install and run &lt;em&gt;vennplus&lt;/em&gt; as follow:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;devtools&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;install_github&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;epinotes/vennplus&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vennplus&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;

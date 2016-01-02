@@ -40,7 +40,7 @@
           Epinotes
         </a>
       </h1>
-      <p class="lead">Epidemiology and R programming</p>
+      <p class="lead">Epidemiology, R Programming, etc.</p>
     </div>
 
     <nav class="sidebar-nav">
@@ -66,16 +66,24 @@
           
         
       
+        
+          
+        
+      
 
 
 
       <a class="sidebar-nav-item" href="https://github.com/epinotes" target="_blank">GitHub project</a>
 
 
-    </nav>
 
-    <p>&copy; 2016. All rights reserved.</p>
-Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="http://hyde.getpoole.com/" target="_blank">Hyde</a></p>
+
+  </nav>
+
+
+    <p>&copy; 2016. <span style="color:white"> M. Njaay </span>. Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="http://hyde.getpoole.com/" target="_blank">Hyde</a></p>
+
+
   </div>
 </div>
 
@@ -88,12 +96,13 @@ Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> and <a href
 
 <h3>Visualizing Multidrug Deaths with plotrix</h3>
 
-<p>The count of the various multidrug use could be displayed with a Venn diagram. . However as the number of intersections increases, the diagram become illisible. A good alternative of Venn diagram is the function <strong>intersectDiagram</strong> from the R package <a href="https://cran.r-project.org/web/packages/plotrix/index.html">plotrix</a>. It recreates the different compartments of the Venn diagram in separate rectangles. In addition the drugs are color coded, and the rectangle sizes are proportional to the count of death for the drug.
+<p>The count of the various multidrug use could be displayed with a Venn diagram. . However as the number of intersections increases, the diagram become illisible. A good alternative of Venn diagram is the function <strong>intersectDiagram</strong> from the R package <a href="https://cran.r-project.org/web/packages/plotrix/index.html" target="_blank"> <strong>plotrix</strong> </a>.<br>
+It recreates the different compartments of the Venn diagram in separate rectangles. In addition the drugs are color coded, and the rectangle sizes are proportional to the count of death for the drug.
 We modified the function intersectDiagram in order to remove the boxed labels (from the original function <em>intersectDiagram</em>) and add shadowed labels.</p>
 
 <h4>Install the package <em>vennplus</em></h4>
 
-<p>I create a small package called <a href="https://github.com/epinotes/vennplus"><strong>vennplus</strong></a> that contains the functions and data needed in this exercise.
+<p>I create a small package called <a href="https://github.com/epinotes/vennplus" target="_blank"> <strong>vennplus</strong> </a> that contains the functions and data needed in this exercise.
  Use package <em>devtools</em> to install and run <em>vennplus</em> as follow:</p>
 <div class="highlight"><pre><code class="language-r" data-lang="r">devtools<span class="o">::</span>install_github<span class="p">(</span><span class="s">&quot;epinotes/vennplus&quot;</span><span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>vennplus<span class="p">)</span>
@@ -155,6 +164,9 @@ col3 <span class="o">&lt;-</span> brewer.pal<span class="p">(</span><span class=
 
 
 </div>
+
+
+
 
     </div>
  <script id="dsq-count-scr" src="//epinotes.disqus.com/count.js" async></script>

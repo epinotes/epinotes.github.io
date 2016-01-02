@@ -35,9 +35,23 @@
 {% comment %}
       <span class="sidebar-nav-item">Currently v{{ site.version }}</span>
 {% endcomment %}
-    </nav>
 
-    <p>&copy; {{ site.time | date: '%Y' }}. All rights reserved.</p>
-Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="http://hyde.getpoole.com/" target="_blank">Hyde</a></p>
+
+  </nav>
+
+{% comment %}
+<p><span style="color:white">Post Archive</span> </p>
+
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
+{% endcomment %}
+    <p>&copy; {{ site.time | date: '%Y' }}. <span style="color:white"> M. Njaay </span>. Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> and <a href="http://hyde.getpoole.com/" target="_blank">Hyde</a></p>
+
+
   </div>
 </div>
