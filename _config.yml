@@ -1,0 +1,26 @@
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
+
+# Permalinks
+permalink:        pretty
+relative_permalinks: true
+
+# Setup
+title:            Epinotes
+tagline:          'R'
+description:      'Epidemiology and R programming'
+url:              http://epinotes.github.io
+baseurl:          /
+
+author:
+  name:           'M. Njaay'
+  url:            https://twitter.com/epinotes
+
+paginate:         5
+
+# Custom vars
+version:          1.0.0
+
+github:
+  repo:           https://github.com/epinotes

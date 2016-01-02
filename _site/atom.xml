@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Epinotes</title>
+ <link href="http://epinotes.github.io/atom.xml" rel="self"/>
+ <link href="http://epinotes.github.io/"/>
+ <updated>2016-01-01T17:40:14-06:00</updated>
+ <id>http://epinotes.github.io</id>
+ <author>
+   <name>M. Njaay</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>Displaying Multidrug Use</title>
+   <link href="http://epinotes.github.io/2015/11/05/Displaying-Multidrug-Use/"/>
+   <updated>2015-11-05T00:00:00-06:00</updated>
+   <id>http://epinotes.github.io/2015/11/05/Displaying-Multidrug-Use</id>
+   <content type="html">&lt;p&gt;Increased use and abuse of opioid has become an alarming public health challenge. Often opioid is used in combination with other drugs, enhancing the risk of death. The association with benzodiazepine is known to be fatal. Searching into all the columns with cause of death codes, one can find the different instances of multidrug use and summarize them in a graph.&lt;/p&gt;
+
+&lt;h3&gt;Visualizing Multidrug Deaths with plotrix&lt;/h3&gt;
+
+&lt;p&gt;The count of the various multidrug use could be displayed with a Venn diagram. . However as the number of intersections increases, the diagram become illisible. A good alternative of Venn diagram is the function &lt;strong&gt;intersectDiagram&lt;/strong&gt; from the R package &lt;a href=&quot;https://cran.r-project.org/web/packages/plotrix/index.html&quot;&gt;plotrix&lt;/a&gt;. It recreates the different compartments of the Venn diagram in separate rectangles. In addition the drugs are color coded, and the rectangle sizes are proportional to the count of death for the drug.
+We modified the function intersectDiagram in order to remove the boxed labels (from the original function &lt;em&gt;intersectDiagram&lt;/em&gt;) and add shadowed labels.&lt;/p&gt;
+
+&lt;h4&gt;Install the package &lt;em&gt;vennplus&lt;/em&gt;&lt;/h4&gt;
+
+&lt;p&gt;I create a small package called &lt;a href=&quot;https://github.com/epinotes/vennplus&quot;&gt;&lt;strong&gt;vennplus&lt;/strong&gt;&lt;/a&gt; that contains the functions and data needed in this exercise.
+ Use package &lt;em&gt;devtools&lt;/em&gt; to install and run &lt;em&gt;vennplus&lt;/em&gt; as follow:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;devtools&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;install_github&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;epinotes/vennplus&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vennplus&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Load the simulated matrix(&lt;em&gt;venndrug&lt;/em&gt;) of 1,000 deaths with indication of whether &lt;em&gt;opioid&lt;/em&gt;, &lt;em&gt;alcohol&lt;/em&gt; or &lt;em&gt;benzodiazepine&lt;/em&gt; were used alone or in combination. Check the first 10 cases:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;data&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;venndrug&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kp&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;venndrug&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;      Opioid Benzo Alcohol
+ [1,]      0     0       0
+ [2,]      1     0       0
+ [3,]      1     1       1
+ [4,]      1     0       0
+ [5,]      0     0       0
+ [6,]      1     1       0
+ [7,]      1     0       0
+ [8,]      0     0       0
+ [9,]      1     0       0
+[10,]      1     0       0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For more details on &lt;em&gt;vennplus&lt;/em&gt; see the &lt;a href=&quot;https://github.com/epinotes/vennplus&quot;&gt;&lt;strong&gt;github project&lt;/strong&gt;&lt;/a&gt;  &lt;/p&gt;
+
+&lt;h4&gt;Loading packges &lt;em&gt;plotrix&lt;/em&gt; and &lt;em&gt;RColorBrewer&lt;/em&gt;&lt;/h4&gt;
+
+&lt;p&gt;Use the package &lt;em&gt;plotrix&lt;/em&gt; for the function &lt;em&gt;makeIntersectlist&lt;/em&gt; that will transform the data matrix &lt;em&gt;venndrug&lt;/em&gt; into a list of the intersection sets saved into the object &amp;quot;drug3&amp;quot;.
+The package &lt;em&gt;RColorBrewer&lt;/em&gt; provides the colors used in the graph.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;plotrix&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+drug3 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; makeIntersectList&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;venndrug&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;sep&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;RColorBrewer&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+col3 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; brewer.pal&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Set2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;Producing the graph&lt;/h4&gt;
+
+&lt;p&gt;The final graph with the simulated data from the fictive place Saraba.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;intersectDiagram2&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;drug3&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Saraba :Drug Deaths (Count)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;sep&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;col&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;col3&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;cex &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1.2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;bg&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;transparent&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; border &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;NA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/figure/posts/2015-11-05-Displaying-Multidrug-Use/unnamed-chunk-4-1.png&quot; alt=&quot;plot of chunk unnamed-chunk-4&quot;&gt; &lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>BMI For Age</title>
+   <link href="http://epinotes.github.io/2015/11/04/BMI-For-Age/"/>
+   <updated>2015-11-04T00:00:00-06:00</updated>
+   <id>http://epinotes.github.io/2015/11/04/BMI-For-Age</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;bmiage&lt;/strong&gt; is a R package for calculating BMI for age and sex. It uses CDC child bmi charts to assign each bmi to the four categories: &lt;em&gt;underweight&lt;/em&gt;, &lt;em&gt;healthy weight&lt;/em&gt;, &lt;em&gt;overweight&lt;/em&gt; and &lt;em&gt;obese&lt;/em&gt;.     &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;To install the package:&lt;/strong&gt;, run these two lines of R codes.   &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;devtools&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;install_github&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;epinotes/bmiage&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;bmiage&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Examples&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;Looking into the help files for the function &lt;em&gt;bmicat&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;o&quot;&gt;?&lt;/span&gt;bmicat
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;When no dataset is provided try:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;bmicat&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;data &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;sex &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;F&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;age &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;wt.kg &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;70&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;ht.m &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1.75&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; age.unit&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;year&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;bind &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;##        bmi bmicat
+## 1 22.85714      1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now let&amp;#39;s create a dataframe df:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt; df &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;data.frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;sex &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;F&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;M&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;F&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; age &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;NA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; weight &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;70&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; height &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1.75&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1.60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1.65&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We can use the new dataframe, df, with the function &lt;em&gt;bmicat&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt; df &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; bmicat&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;data &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; df&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;sex &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; sex&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;age &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; age&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;wt.kg &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; weight &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;ht.m &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; height&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; age.unit&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;year&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;bind &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+ df
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;##   sex age weight height      bmi bmicat
+## 1   F  18     70   1.75 22.85714      1
+## 2   M  15     50   1.60 19.53125      1
+## 3   F  NA     55   1.65 20.20202     NA
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now &lt;em&gt;df&lt;/em&gt; has two added variables.  &lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>
