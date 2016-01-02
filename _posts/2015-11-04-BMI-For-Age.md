@@ -1,5 +1,6 @@
 ---   
 layout: post
+comments: true  
 title: BMI For Age
 ---    
 
