@@ -4,7 +4,7 @@ comments: true
 title: BMI For Age
 ---    
 
-**bmiage** is a R package for calculating BMI for age and sex. It uses CDC child bmi charts to assign each bmi to the four categories: *underweight*, *healthy weight*, *overweight* and *obese*.     
+I build the R package <a href="https://github.com/epinotes/bmiage" target="_blank"> **bmiage** </a>  to ease the classification of BMI for age and sex. It uses CDC child bmi charts to assign each bmi to the four categories: *underweight*, *healthy weight*, *overweight* and *obese*.     
 
 **To install the package:**, run these two lines of R codes.   
 
